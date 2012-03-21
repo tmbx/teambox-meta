@@ -1,0 +1,32 @@
+#!/usr/bin/python
+
+# This scripts regenerates debian/substvar from the teambox.minimal seed in
+# ../teambox-platform so that this meta-package depends on the system packages
+# required by a Teambox server.
+
+from kfile import *
+
+def main():
+    seed_path = '../teambox-platform/scripts/buildvm/cfg/seeds/sys/teambox.minimal'
+    sub_path = 'debian/teambox-meta.substvars'
+    pkg_list = []
+    
+    for line in read_file(seed_path).split("\n"):
+        match = re.match(" \* (\S+)", line)
+        if match:
+            w = match.group(1)
+            
+            # If the word contains a '!', skip it.
+            if w.find("!") != -1: continue
+            
+            # Remove parentheses if present.
+            w = w.replace("(", "")
+            w = w.replace(")", "")
+            
+            pkg_list.append(w)
+    
+    content = "Depends=" + ", ".join(pkg_list) + "\n"
+    write_file(sub_path, content)
+    
+main()
+

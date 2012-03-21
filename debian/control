@@ -1,0 +1,13 @@
+Source: teambox-meta
+Priority: optional
+Maintainer: Teambox Packages
+Build-Depends: debhelper (>= 4)
+Standards-Version: 3.7.2
+Section: teambox-any
+
+Package: teambox-meta
+Architecture: all
+Depends: ${Depends}, klinuxmod
+Description: Teambox Basic Platform
+ System packages required by the Teambox platform products.
+

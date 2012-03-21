@@ -1,0 +1,30 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+# export DH_VERBOSE=1
+
+clean:
+	dh_testdir
+	dh_testroot
+	dh_clean --exclude=debian/teambox-meta.substvar
+
+build:
+
+install: build
+	mkdir debian/teambox-meta
+
+binary-arch:
+binary-indep: install
+	dh_testdir
+	dh_testroot
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-arch binary-indep
+
+.PHONY: build clean binary-indep binary-arch binary install
+
